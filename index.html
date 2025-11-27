@@ -1,0 +1,129 @@
+<html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Med Control — Controle e Lembretes de Medicamentos</title>
+  <meta name="description" content="Med Control — controlador e notificador de medicamentos com foco em acessibilidade para idosos." />
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <div class="brand" aria-label="Med Control — aplicativo de lembretes">
+        <svg class="brand__icon" width="40" height="40" viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="3" y="7" width="18" height="10" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M12 4v4M9 7h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="brand__name">Med Control</span>
+      </div>
+
+      <nav class="main-nav" role="navigation" aria-label="Navegação principal">
+        <ul class="main-nav__list">
+          <li><a href="#home" class="main-nav__link">Início</a></li>
+          <li><a href="#about" class="main-nav__link">Sobre</a></li>
+          <li><a href="#demo" class="main-nav__link">Protótipo</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <button class="header-btn" id="btn-toggle-contrast" aria-pressed="false">Alto Contraste</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="home" class="main" role="main">
+    <!-- HERO / Landing -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero__content">
+        <h1 id="hero-title" class="hero__title">Lembretes de remédio simples e confiáveis</h1>
+        <p class="hero__subtitle">Design limpo e profissional — foco em legibilidade e uso por idosos.</p>
+        <a class="cta-btn" href="#demo">Abrir protótipo</a>
+      </div>
+      <div class="hero__visual" aria-hidden="true">
+        <svg width="240" height="160" viewBox="0 0 240 160" role="img" aria-hidden="true">
+          <rect x="6" y="10" width="228" height="140" rx="12" fill="#FFFFFF" stroke="#1F8A70" stroke-width="2"/>
+          <circle cx="60" cy="70" r="22" fill="#1F8A70" opacity="0.95" />
+          <rect x="100" y="50" width="90" height="20" rx="6" fill="#A8E6CF" opacity="0.95"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="info" aria-labelledby="about-title">
+      <h2 id="about-title" class="info__title">Por que usar o Med Control?</h2>
+      <p class="info__text">O Med Control ajuda a reduzir doses perdidas, organiza horários e mantém um histórico simples de tomadas — ideal para uso pessoal ou monitoramento por cuidadores.</p>
+      <ul class="info__list">
+        <li>Notificações no navegador (permita as notificações)</li>
+        <li>Registro de tomadas e pulos</li>
+        <li>Exportação do histórico em CSV para impressão ou envio</li>
+      </ul>
+    </section>
+
+    <!-- DEMO / PROTÓTIPO FUNCIONAL -->
+    <section id="demo" class="demo" aria-labelledby="demo-title">
+      <h2 id="demo-title" class="demo__title">Protótipo — Gerencie seus medicamentos</h2>
+
+      <form id="medicineForm" class="form" aria-describedby="form-desc">
+        <p id="form-desc" class="form__desc">Adicione nome, dose e horário. Use formato 24h (ex: 08:30).</p>
+
+        <label class="form__label" for="med-name">Nome do medicamento</label>
+        <input id="med-name" class="form__input" type="text" inputmode="text" required minlength="2" aria-required="true" placeholder="Ex: Omeprazol" />
+
+        <label class="form__label" for="med-dose">Dose</label>
+        <input id="med-dose" class="form__input" type="text" inputmode="text" placeholder="Ex: 20 mg" />
+
+        <label class="form__label" for="med-time">Horário</label>
+        <input id="med-time" class="form__input" type="time" required aria-required="true" />
+
+        <div class="form__row">
+          <label class="form__label--inline">
+            <input id="med-repeat" type="checkbox" /> Repetir diariamente
+          </label>
+
+          <button type="submit" class="form__btn">Adicionar</button>
+        </div>
+      </form>
+
+      <div class="controls">
+        <button id="btn-request-perm" class="controls__btn">Ativar Notificações</button>
+        <button id="btn-clear-all" class="controls__btn controls__btn--danger">Apagar tudo</button>
+        <button id="btn-export-hist" class="controls__btn">Exportar Histórico (CSV)</button>
+      </div>
+
+      <h3 class="demo__subtitle">Agenda de hoje</h3>
+      <div id="liveRegion" class="sr-live" aria-live="polite" aria-atomic="true"></div>
+
+      <ul id="medList" class="med-list" aria-live="polite"></ul>
+
+      <template id="med-item-template">
+        <li class="med-item">
+          <div class="med-item__left">
+            <strong class="med-item__name"></strong>
+            <div class="med-item__meta"></div>
+          </div>
+          <div class="med-item__right">
+            <button class="med-item__take" aria-label="Marcar como tomado">Tomei</button>
+            <button class="med-item__skip" aria-label="Pular dose">Pular</button>
+          </div>
+        </li>
+      </template>
+
+      <section class="history" aria-labelledby="history-title">
+        <h4 id="history-title" class="history__title">Histórico recente</h4>
+        <p class="small">Últimas ações registradas (tomei / pulou).</p>
+        <ul id="histList" class="hist-list"></ul>
+      </section>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="site-footer__inner">
+      <p>Projeto técnico — Med Control • © <span id="year"></span></p>
+      <p class="small">Dica: teste notificações permitindo-as no navegador.</p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
